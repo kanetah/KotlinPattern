@@ -21,6 +21,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "junit:junit:4.+"
+    compile "org.jetbrains.kotlin:kotlin-reflect:1.2.21-release-88 (1.2.21)"
 }
 
 compileKotlin {
