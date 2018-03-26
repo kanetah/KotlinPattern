@@ -5,7 +5,7 @@ import org.junit.Test
 /**
  * created by kane on 2018/3/22
  */
-class ObserverTest {
+class TestObserver {
     @Test
     fun test() {
         val weather = Weather()

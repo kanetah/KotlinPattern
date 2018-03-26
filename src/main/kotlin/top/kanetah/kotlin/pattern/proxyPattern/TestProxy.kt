@@ -7,7 +7,7 @@ import org.junit.Test
  * created by kane on 2018/3/21
  * 代理模式测试
  */
-class ProxyTest {
+class TestProxy {
     @Test
     fun test() {
         val proxy = WizardTowerProxy(IvoryTower())

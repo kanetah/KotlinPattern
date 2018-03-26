@@ -7,7 +7,7 @@ import org.junit.Test
  * created by kane on 2018/3/20
  * 工厂方法测试
  */
-class FactoryMethodTest {
+class TestFactoryMethod {
 
     // 实例化工厂对象
     private val weaponFactory = WeaponFactory()
