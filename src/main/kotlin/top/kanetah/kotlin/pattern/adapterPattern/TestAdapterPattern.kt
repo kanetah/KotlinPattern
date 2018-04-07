@@ -8,9 +8,6 @@ import org.junit.Test
  * 适配器模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。
  */
 class TestAdapterPattern {
-    /**
-     *
-     */
     @Test
     fun test() {
         val captain = Captain(FishingBoatAdapter())
