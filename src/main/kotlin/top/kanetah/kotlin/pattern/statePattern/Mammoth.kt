@@ -7,22 +7,20 @@ import kotlin.properties.Delegates
  */
 class Mammoth {
 
-    private var state by Delegates.observable(PeacefulState(this) as State) { _, _, new ->
-        new.onEnterState()
+    private var state by Delegates.observable(peacefulState(this) as State) { _, _, newState ->
+        newState.onEnterState()
     }
 
     /**
      * when 子句构成了一个状态机
      */
-    fun timePasses() {
-        when (state) {
-            is PeacefulState -> this changeStateTo angryState
-            else -> this changeStateTo peacefulState
-        }
+    fun timePasses() = when (state) {
+        is PeacefulState -> state changeTo angryState
+        else -> state changeTo peacefulState
     }
 
-    private infix fun Mammoth.changeStateTo(create: (Mammoth) -> State) {
-        this.state = create(this@changeStateTo)
+    private infix fun State.changeTo(create: (Mammoth) -> State) {
+        state = create(this@Mammoth)
     }
 
     override fun toString() = "The mammoth"
