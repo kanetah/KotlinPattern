@@ -1,5 +1,6 @@
 package top.kanetah.kotlin.pattern.interpreterPattern
 
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -7,13 +8,18 @@ import java.util.*
  * 此解释器中定义了对逆波兰式的解释规则
  */
 object RPNInterpreter {
-    operator fun invoke(rpn: String) = with(Stack<Expression>()) {
+    operator fun invoke(rpn: String): BigDecimal = with(Stack<Expression>()) {
         val tokenList = rpn.split(" ").dropLastWhile { it.isEmpty() }.toTypedArray()
         tokenList.forEach { elem ->
             if (isOperator(elem)) {
-                val rightExpression = pop() alsoLog "popped from stack left"
-                val leftExpression = pop() alsoLog "                 right"
-                val operator = getOperatorInstance(elem, leftExpression, rightExpression)
+                val (rightExpression, leftExpression) = synchronized(this) {
+                    data class Expressions(val right: Expression, val left: Expression)
+                    Expressions(
+                            pop() alsoLog "popped from stack right",
+                            pop() alsoLog "                  left"
+                    )
+                }
+                val operator = operatorInstance(elem, leftExpression, rightExpression)
                 println("operator: $operator")
                 val result = operator.interpret()
                 push(NumberExpression(result) alsoLog "push result to stack")
@@ -21,18 +27,18 @@ object RPNInterpreter {
                 push(NumberExpression(elem) alsoLog "push to stack")
             }
         }
-        return@with pop().interpret()
+        pop().interpret()
     }
 
     private fun isOperator(s: String) = setOf("+", "-", "*", "/").contains(s)
 
-    private fun getOperatorInstance(s: String, left: Expression, right: Expression) = when (s) {
+    private fun operatorInstance(operator: String, left: Expression, right: Expression) = when (operator) {
         "+" -> PlusExpression(left, right)
         "-" -> MinusExpression(left, right)
         "*" -> MultiplyExpression(left, right)
         "/" -> DivideExpression(left, right)
-        else -> throw IllegalArgumentException("this operator has not impl.")
+        else -> throw IllegalArgumentException("Operator: $operator has not impl.")
     }
 
-    private infix fun Expression.alsoLog(message: String) = this.also { println("$message: ${this.interpret()}") }
+    private infix fun Expression.alsoLog(message: Any?) = this.also { println("$message: ${interpret()}") }
 }

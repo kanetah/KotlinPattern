@@ -40,9 +40,9 @@ class DivideExpression(
 }
 
 class NumberExpression(
-        private var number: BigDecimal = BigDecimal(0)
+        private val number: BigDecimal = BigDecimal(0)
 ) : Expression() {
-    constructor(s: String) : this(s.toBigDecimal())
+    constructor(value: String) : this(value.toBigDecimal())
 
     override fun interpret() = number
     override fun toString() = "number"
