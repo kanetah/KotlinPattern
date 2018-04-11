@@ -37,7 +37,7 @@ object RPNInterpreter {
         "-" -> MinusExpression(left, right)
         "*" -> MultiplyExpression(left, right)
         "/" -> DivideExpression(left, right)
-        else -> throw IllegalArgumentException("Operator: $operator has not impl.")
+        else -> throw IllegalArgumentException("operator: $operator has not impl.")
     }
 
     private infix fun Expression.alsoLog(message: Any?) = this.also { println("$message: ${interpret()}") }
